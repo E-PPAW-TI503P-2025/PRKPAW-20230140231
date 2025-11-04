@@ -1,4 +1,5 @@
 {
+<<<<<<< HEAD
   "name": "prk_paw_2025",
   "version": "1.0.0",
   "description": "Project Praktikum PAW 2025",
@@ -15,5 +16,13 @@
   },
   "devDependencies": {
     "nodemon": "^3.1.10"
+=======
+  "dependencies": {
+    "cors": "^2.8.5",
+    "date-fns": "^4.1.0",
+    "date-fns-tz": "^3.2.0",
+    "helmet": "^8.1.0",
+    "morgan": "^1.10.1"
+>>>>>>> 6c72c23d80c0df10ba53ea4e5a1bc3ef43760673
   }
 }
