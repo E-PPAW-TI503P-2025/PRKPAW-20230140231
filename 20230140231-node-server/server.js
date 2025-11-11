@@ -1,59 +1,34 @@
-<<<<<<< HEAD
+const authRoutes = require("./routes/auth");
 const express = require("express");
 const cors = require("cors");
-const app = express();
-const PORT = 3001;
 const morgan = require("morgan");
 
-// Impor router
-const presensiRoutes = require("./routes/presensi");
-const reportRoutes = require("./routes/reports");
+const app = express();
+const PORT = 3001;
 
-// Middleware
+// Middleware umum
 app.use(cors());
 app.use(express.json());
 app.use(morgan("dev"));
-app.use((req, res, next) => {
-  console.log(`${new Date().toISOString()} - ${req.method} ${req.url}`);
-  next();
-});
-app.get("/", (req, res) => {
-  res.send("Home Page for API");
-});
-const ruteBuku = require("./routes/books");
-app.use("/api/books", ruteBuku);
-app.use("/api/presensi", presensiRoutes);
-app.use("/api/reports", reportRoutes);
-app.listen(PORT, () => {
-  console.log(`Express server running at http://localhost:${PORT}/`);
-});
-=======
-const express = require("express");
-const cors = require("cors");
-const app = express();
-const PORT = 3001;
-const morgan = require("morgan");
+app.use("/api/auth", authRoutes);
 
-// Impor router
+
+// Import routes
 const presensiRoutes = require("./routes/presensi");
 const reportRoutes = require("./routes/reports");
+const bookRoutes = require("./routes/books"); // kalau nggak dipakai juga tidak apa-apa
 
-// Middleware
-app.use(cors());
-app.use(express.json());
-app.use(morgan("dev"));
-app.use((req, res, next) => {
-  console.log(`${new Date().toISOString()} - ${req.method} ${req.url}`);
-  next();
-});
-app.get("/", (req, res) => {
-  res.send("Home Page for API");
-});
-const ruteBuku = require("./routes/books");
-app.use("/api/books", ruteBuku);
+// Pasang prefix route
 app.use("/api/presensi", presensiRoutes);
 app.use("/api/reports", reportRoutes);
-app.listen(PORT, () => {
-  console.log(`Express server running at http://localhost:${PORT}/`);
+app.use("/api/books", bookRoutes);
+
+// Route cek server
+app.get("/", (req, res) => {
+  res.json({ message: "API Presensi PAW 2025 berjalan" });
 });
->>>>>>> 6c72c23d80c0df10ba53ea4e5a1bc3ef43760673
+
+// Jalankan server
+app.listen(PORT, () => {
+  console.log(`Server berjalan di http://localhost:${PORT}`);
+});

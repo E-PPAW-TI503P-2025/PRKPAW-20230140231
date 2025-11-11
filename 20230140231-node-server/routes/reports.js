@@ -1,15 +1,18 @@
-<<<<<<< HEAD
-const express = require('express');
+const express = require("express");
 const router = express.Router();
- 	const reportController = require('../controllers/reportController');
- 	const { addUserData, isAdmin } = require('../middleware/permissionMiddleware');
- 	router.get('/daily', [addUserData, isAdmin], reportController.getDailyReport);
- 	module.exports = router;
-=======
-const express = require('express');
-const router = express.Router();
- 	const reportController = require('../controllers/reportController');
- 	const { addUserData, isAdmin } = require('../middleware/permissionMiddleware');
- 	router.get('/daily', [addUserData, isAdmin], reportController.getDailyReport);
- 	module.exports = router;
->>>>>>> 6c72c23d80c0df10ba53ea4e5a1bc3ef43760673
+
+const reportController = require("../controllers/reportController");
+const { addUserData, isAdmin } = require("../middleware/permissionMiddleware");
+
+// GET /api/reports/daily
+// Query optional:
+//   ?nama=User
+//   ?tanggalMulai=2025-11-01&tanggalSelesai=2025-11-10
+router.get(
+  "/daily",
+  addUserData,   // middleware isi req.user
+  isAdmin,       // middleware cek role admin
+  reportController.getDailyReport
+);
+
+module.exports = router;
