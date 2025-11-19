@@ -59,7 +59,7 @@ function DashboardPage() {
             </p>
             <p className="text-xl font-bold text-gray-700">Laporan Admin</p>
             <p className="text-xs text-gray-600 mt-1">
-              Laporan Admin
+              Laporan Admin page
             </p>
           </div>
         </div>
