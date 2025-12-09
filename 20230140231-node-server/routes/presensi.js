@@ -1,52 +1,44 @@
 const express = require("express");
 const router = express.Router();
+
 const presensiController = require("../controllers/presensiController");
 const { addUserData } = require("../middleware/permissionMiddleware");
-
-// Tambahan library validasi tanggal
 const { body, validationResult } = require("express-validator");
 
-// Middleware untuk menambahkan data user ke request
+// Middleware untuk isi req.user dari token (JWT kamu sendiri)
 router.use(addUserData);
 
-// Middleware untuk mengecek hasil validasi
+// Middleware cek hasil validasi
 const validateRequest = (req, res, next) => {
   const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    return res.status(400).json({
-      message: "Data yang dikirim tidak valid.",
-      errors: errors.array(),
-    });
-  }
-  next();
+  if (!errors.length) return next();
+
+  return res.status(400).json({
+    message: "Data yang dikirim tidak valid.",
+    errors: errors.array(),
+  });
 };
 
-// ---------------------------
-// ROUTES PRESENSI
-// ---------------------------
+// =========================
+// ROUTES PRESENSI (SESUIAI MODUL)
+// =========================
 
-// Check-in dan Check-out
-router.post("/check-in", presensiController.CheckIn);
-router.post("/check-out", presensiController.CheckOut);
-
-// UPDATE data presensi (PUT)
-router.put(
-  "/:id",
+// CHECK-IN  -> POST /api/presensi/check-in
+router.post(
+  "/check-in",
   [
-    body("checkIn")
-      .optional()
-      .isISO8601()
-      .withMessage("checkIn harus berupa tanggal yang valid (format ISO 8601)."),
-    body("checkOut")
-      .optional()
-      .isISO8601()
-      .withMessage("checkOut harus berupa tanggal yang valid (format ISO 8601)."),
+    body("latitude")
+      .notEmpty().withMessage("latitude wajib diisi")
+      .isFloat().withMessage("latitude harus berupa angka"),
+    body("longitude")
+      .notEmpty().withMessage("longitude wajib diisi")
+      .isFloat().withMessage("longitude harus berupa angka"),
   ],
   validateRequest,
-  presensiController.updatePresensi
+  presensiController.CheckIn
 );
 
-// DELETE data presensi
-router.delete("/:id", presensiController.deletePresensi);
+// CHECK-OUT -> POST /api/presensi/check-out
+router.post("/check-out", presensiController.CheckOut);
 
 module.exports = router;
