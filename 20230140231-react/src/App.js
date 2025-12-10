@@ -3,9 +3,8 @@ import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import LoginPage from "./components/LoginPage";
 import RegisterPage from "./components/RegisterPage";
 import DashboardPage from "./components/DashboardPage";
-import Presensi from "./components/PresensiPage"; 
-import ReportPage from "./components/ReportPage";         
-import AttendancePage from "./components/PresensiPage";
+import AttendancePage from "./components/PresensiPage";  // ⬅️ cukup SATU ini
+import ReportPage from "./components/ReportPage";
 
 function App() {
   return (
@@ -22,7 +21,6 @@ function App() {
           <Link to="/dashboard" className="text-blue-600 hover:underline">
             Dashboard
           </Link>
-          {/* opsional: link langsung */}
           <Link to="/presensi" className="text-blue-600 hover:underline">
             Presensi
           </Link>
@@ -35,8 +33,8 @@ function App() {
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/dashboard" element={<DashboardPage />} />
-          <Route path="/presensi" element={<AttendancePage/>} />  {/* ✅ */}
-          <Route path="/report" element={<ReportPage />} />         {/* ✅ */}
+          <Route path="/presensi" element={<AttendancePage />} /> {/* ✅ */}
+          <Route path="/report" element={<ReportPage />} />       {/* ✅ */}
           <Route path="/" element={<LoginPage />} />
         </Routes>
       </div>
